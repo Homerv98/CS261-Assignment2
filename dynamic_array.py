@@ -133,9 +133,18 @@ class DynamicArray:
 
     def resize(self, new_capacity: int) -> None:
         """
-        TODO: Write this implementation
+        This method will resize the array when needed.
         """
-        pass
+        if new_capacity <= self.size:
+            return
+
+        new_array = StaticArray(new_capacity)
+
+        for i in range(self.size):
+            new_array[i] = self.data[i]
+
+        self.data = new_array
+        self.size = new_capacity
 
     def append(self, value: object) -> None:
         """
