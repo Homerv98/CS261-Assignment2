@@ -44,45 +44,83 @@ class Bag:
 
     def add(self, value: object) -> None:
         """
-        TODO: Write this implementation
+        add value to bag
         """
-        pass
+        self._da.append(value)
 
     def remove(self, value: object) -> bool:
         """
-        TODO: Write this implementation
+        remove any one occurrence of value from bag.
+        return true if removed, false otherwise
         """
-        pass
+        for i in range(self._da.length()):
+            if value == self._da.get_at_index(i):
+                self._da.remove_at_index(i)
+                return True
+        return False
 
     def count(self, value: object) -> int:
         """
-        TODO: Write this implementation
+        return number of occurrences of value from bag
         """
-        pass
+        count = 0;
+
+        for i in range(self._da.length()):
+            if value == self._da.get_at_index(i):
+                count += 1
+        return count
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        clear the array
         """
-        pass
+        self._da = DynamicArray()
 
     def equal(self, second_bag: "Bag") -> bool:
         """
-        TODO: Write this implementation
+        return true if two bags are equal
         """
-        pass
+        #size check
+        if self.size() != second_bag.size():
+            return False
+
+        #both empty
+        if self.size() == 0:
+            return True
+
+        #compare counts for each element in both bags
+        for i in range(self._da.length()):
+            val = self._da.get_at_index(i)
+
+            #check if this has been seen befor
+            seen = False
+            for j in range(self._da.length()):
+                if self._da.get_at_index(j) == val:
+                    seen = True
+                    break
+            if seen:
+                continue
+            if self.count(val) != second_bag.count(val):
+                return False
+        return True
 
     def __iter__(self):
         """
-        TODO: Write this implementation
+        enable iteration on bag
         """
-        pass
+        self._iter_index = 0
+        return self
 
     def __next__(self):
         """
-        TODO: Write this implementation
+        Return next element from bag or raise StopIteration
         """
-        pass
+        if self._iter_index >= self._da.length():
+            raise StopIteration
+        value = self._da.get_at_index(self._iter_index)
+        self._iter_index += 1
+        return value
+
 
 
 # ------------------- BASIC TESTING -----------------------------------------
