@@ -135,12 +135,15 @@ class DynamicArray:
         """
         This method will resize the array when needed.
         """
-        if new_capacity <= self._size:        #Stops work if the new capacity is less than or equal to previous capacity
+
+        # Stops work if the new capacity is less than or equal to 0 or previous capacity
+        if new_capacity <= 0 or new_capacity < self._size:
             return
 
         new_array = StaticArray(new_capacity)
 
-        for i in range(self._size):           #Copies old data to new array
+        # Copies old data to new array
+        for i in range(self._size):
             new_array[i] = self._data[i]
 
         self._data = new_array
@@ -151,10 +154,12 @@ class DynamicArray:
         """
         Method to append value to end of array.
         """
-        if self._size == self._capacity:        #resizes array if it is full
+        # resizes array if it is full
+        if self._size == self._capacity:
             self.resize(self._capacity * 2)
 
-        self._data[self._size] = value          #add value to the end of the array
+        # add value to the end of the array
+        self._data[self._size] = value
 
         self._size += 1
 
@@ -162,13 +167,54 @@ class DynamicArray:
         """
         Method to insert value at given index in array.
         """
-        pass
+        # Raise exception for an invalid index
+        if index < 0 or index > self._size:
+            raise DynamicArrayException
+
+        # Resize if the array is full
+        if self._size == self._capacity:
+            self.resize(self._capacity * 2)
+
+        # Resize if the array is full
+        for i in range(self._size, index, -1):
+            self._data[i] = self._data[i - 1]
+
+
+        self._data[index] = value
+        self._size += 1
+
+
+
 
     def remove_at_index(self, index: int) -> None:
         """
-        TODO: Write this implementation
+        Removes value at given index from array.
+
+        If size is less than 1/4 capacity, shrink array.
         """
-        pass
+
+        #invalid index
+        if index < 0 or index > self._size:
+            raise DynamicArrayException
+
+        #srhink the capacity if size less than 1/4 capacity
+        if self._capacity > 10 and self._size < (self._capacity / 4):
+            new_capacity = 2 * self._size
+            if new_capacity < 10:
+                new_capacity = 10
+            self.resize(new_capacity)
+
+        #Move elements to the left
+        for i in range(index, self._size - 1):
+            self._data[i] = self._data[i + 1]
+
+        #clear las now slot
+        self._data[self._size - 1] = None
+
+        # update size
+        self._size -= 1
+
+
 
     def slice(self, start_index: int, size: int) -> "DynamicArray":
         """
