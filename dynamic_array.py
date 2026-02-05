@@ -218,9 +218,30 @@ class DynamicArray:
 
     def slice(self, start_index: int, size: int) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Method returns a new DynamicArray containing requested number of elements, starting from start_index
+
         """
-        pass
+
+        #check size
+        if size < 0:
+            raise DynamicArrayException
+
+        #validate start index
+        if start_index < 0 or start_index >= self._size:
+            raise DynamicArrayException
+
+        #validate size of array
+        if start_index + size > self._size:
+            raise DynamicArrayException
+
+        #make new array
+        result = DynamicArray()
+        for i in range(size):
+            result.append(self._data[start_index + i])
+
+        return result
+
+
 
     def merge(self, second_da: "DynamicArray") -> None:
         """
