@@ -268,9 +268,16 @@ class DynamicArray:
 
     def filter(self, filter_func) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Return a new DynamicArray with elements that pass filter_func.
         """
-        pass
+        result = DynamicArray()
+
+        for i in range(self._size):
+            value = self._data[i]
+            if filter_func(value):
+                result.append(value)
+
+        return result
 
     def reduce(self, reduce_func, initializer=None) -> object:
         """
