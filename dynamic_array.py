@@ -303,9 +303,44 @@ class DynamicArray:
 
 def find_mode(arr: DynamicArray) -> tuple[DynamicArray, int]:
     """
-    TODO: Write this implementation
+    Given a sorted DynamicArray (ascending or descending), return (mode_array, frequency),
+    where mode_array contains all value(s) with the highest frequency in order.
     """
-    pass
+    # arr guaranteed to have at least one element per spec
+    mode_da = DynamicArray()
+    max_count = 1
+
+    current_value = arr.get_at_index(0)
+    current_count = 1
+
+    # Walk through runs of equal values
+    for i in range(1, arr.length()):
+        value = arr.get_at_index(i)
+
+        if value == current_value:
+            current_count += 1
+        else:
+            # run for current_value
+            if current_count > max_count:
+                max_count = current_count
+                mode_da = DynamicArray()
+                mode_da.append(current_value)
+            elif current_count == max_count:
+                mode_da.append(current_value)
+
+            # start new run
+            current_value = value
+            current_count = 1
+
+    # finalize the last run
+    if current_count > max_count:
+        max_count = current_count
+        mode_da = DynamicArray()
+        mode_da.append(current_value)
+    elif current_count == max_count:
+        mode_da.append(current_value)
+
+    return mode_da, max_count
 
 
 # ------------------- BASIC TESTING -----------------------------------------
