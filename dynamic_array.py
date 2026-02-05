@@ -234,6 +234,7 @@ class DynamicArray:
         if start_index + size > self._size:
             raise DynamicArrayException
 
+
         #make new array
         result = DynamicArray()
         for i in range(size):
@@ -245,15 +246,25 @@ class DynamicArray:
 
     def merge(self, second_da: "DynamicArray") -> None:
         """
-        TODO: Write this implementation
+        append all elements in second da.
         """
-        pass
+        if self._capacity > 10 and self._size < (self._capacity / 4):
+            new_capacity = 2 * self._size
+            if new_capacity < 10:
+                new_capacity = 10
+            self.resize(new_capacity)
 
     def map(self, map_func) -> "DynamicArray":
         """
-        TODO: Write this implementation
+        Return a new DynamicArray where each value is produced by map_func.
         """
-        pass
+        result = DynamicArray()
+
+        for i in range(self._size):
+            mapped_value = map_func(self._data[i])
+            result.append(mapped_value)
+
+        return result
 
     def filter(self, filter_func) -> "DynamicArray":
         """
