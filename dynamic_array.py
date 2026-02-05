@@ -281,9 +281,25 @@ class DynamicArray:
 
     def reduce(self, reduce_func, initializer=None) -> object:
         """
-        TODO: Write this implementation
+        Apply reduce_func cumulatively to the elements and return a single result.
         """
-        pass
+
+        #empty array
+        if self._size == 0:
+            return initializer
+
+        #initializer provided
+        if initializer is not None:
+            accumulator = initializer
+            start_index = 0
+        else:
+            accumulator = self._data[0]
+            start_index = 1
+
+        for i in range(start_index, self._size):
+            accumulator = reduce_func(accumulator, self._data[i])
+
+        return accumulator
 
 def find_mode(arr: DynamicArray) -> tuple[DynamicArray, int]:
     """
