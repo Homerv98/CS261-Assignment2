@@ -135,26 +135,32 @@ class DynamicArray:
         """
         This method will resize the array when needed.
         """
-        if new_capacity <= self.size:
+        if new_capacity <= self._size:        #Stops work if the new capacity is less than or equal to previous capacity
             return
 
         new_array = StaticArray(new_capacity)
 
-        for i in range(self.size):
-            new_array[i] = self.data[i]
+        for i in range(self._size):           #Copies old data to new array
+            new_array[i] = self._data[i]
 
-        self.data = new_array
-        self.size = new_capacity
+        self._data = new_array
+        self._capacity = new_capacity
+
 
     def append(self, value: object) -> None:
         """
-        TODO: Write this implementation
+        Method to append value to end of array.
         """
-        pass
+        if self._size == self._capacity:        #resizes array if it is full
+            self.resize(self._capacity * 2)
+
+        self._data[self._size] = value          #add value to the end of the array
+
+        self._size += 1
 
     def insert_at_index(self, index: int, value: object) -> None:
         """
-        TODO: Write this implementation
+        Method to insert value at given index in array.
         """
         pass
 
